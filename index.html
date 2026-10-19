@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Treinos</title>
+  <meta name="description" content="Treino de academia: o personal monta a ficha, o aluno marca as séries, cronometra o descanso e vê o vídeo de cada exercício.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#c2410c" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121314" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Treinos">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // Aplica o tema salvo antes da primeira pintura (evita "piscar" claro/escuro).
+    try {
+      var t = localStorage.getItem('treinos:theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <p class="faixa-local" id="faixa-local" hidden>Modo local: os dados ficam só neste navegador. <a href="#/ajustes">Ver como aluno ou conectar</a></p>
+  <div class="faixa-treino" id="faixa-treino" hidden></div>
+
+  <div class="shell" id="shell" hidden>
+    <nav class="nav" aria-label="Seções do app">
+      <a class="brand" href="#/inicio" aria-label="Treinos, início">
+        <img src="icons/icon.svg" alt="" width="32" height="32">
+        <span>Treinos</span>
+      </a>
+      <ul class="nav-list" id="nav-list"></ul>
+    </nav>
+    <main id="main" class="main" tabindex="-1"></main>
+  </div>
+
+  <div id="auth-root"><p class="carregando" role="status">Carregando…</p></div>
+
+  <button class="fab" id="fab" type="button" hidden aria-label="Novo aluno"></button>
+
+  <div class="descanso" id="descanso" hidden></div>
+
+  <dialog id="generic-dialog" class="sheet" aria-labelledby="generic-dialog-title"></dialog>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <p style="padding:24px;font-family:system-ui">O app de Treinos precisa de JavaScript ativado.</p>
+  </noscript>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

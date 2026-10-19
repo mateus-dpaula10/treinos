@@ -1,0 +1,14 @@
+# Fica fora do site publicado (não é página): repositório, configs, banco, funções e testes.
+.git
+.gitignore
+.assetsignore
+.wrangler
+wrangler.jsonc
+package.json
+package-lock.json
+README.md
+node_modules
+supabase
+tests
+docs
+scripts
