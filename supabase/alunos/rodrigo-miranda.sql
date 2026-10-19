@@ -1,16 +1,23 @@
 -- Fichas do Rodrigo Miranda (A, B, C, D) para o banco do Supabase.
--- 1. Cadastre o Rodrigo pelo app (Alunos → Novo aluno): é isso que cria o login dele.
--- 2. Troque o e-mail em v_aluno abaixo e rode este arquivo no SQL Editor.
+-- 1. Cadastre o Rodrigo pelo app (Alunos → Novo aluno) com o nome "Rodrigo Miranda": é isso que cria o login dele.
+-- 2. Rode este arquivo inteiro no SQL Editor. O aluno é encontrado pelo nome (não precisa editar nada).
 -- Rodar de novo não duplica: se ele já tiver uma ficha com o mesmo nome, ela é pulada.
 -- Descanso: 60 s em tudo (não veio no treino passado); ajuste pelo app, na ficha.
 do $$
 declare
-  v_aluno text := 'TROQUE-PELO-EMAIL-DO-RODRIGO';
+  v_nome text := 'Rodrigo Miranda';
+  v_aluno text;
+  v_qtd int;
   v_faltando text;
 begin
-  if not exists (select 1 from treinos.membros where email = v_aluno and papel = 'aluno') then
-    raise exception 'Cadastre o aluno % pelo app antes (Alunos → Novo aluno).', v_aluno;
+  select count(*), min(email) into v_qtd, v_aluno
+    from treinos.membros where papel = 'aluno' and lower(trim(nome)) = lower(v_nome);
+  if v_qtd = 0 then
+    raise exception 'Não achei o aluno "%". Cadastre pelo app antes (Alunos → Novo aluno), com esse nome.', v_nome;
+  elsif v_qtd > 1 then
+    raise exception 'Há % alunos chamados "%". Troque v_nome por um nome único ou ajuste no app.', v_qtd, v_nome;
   end if;
+  raise notice 'Criando as fichas de % (%)', v_nome, v_aluno;
 
   create temp table fichas_rodrigo (letra text, nome text, ordem int) on commit drop;
   insert into fichas_rodrigo values

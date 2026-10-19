@@ -5,7 +5,7 @@ import {
 } from '../store.js';
 import { GRUPOS, DESCANSOS, fmtDescanso, novoItem, ultimaVez, textoSeries } from '../domain.js';
 import { esc, normalize, plural, fmtDate } from '../utils.js';
-import { emptyState, grupoTag, botaoVideo, toast, enquanto, confirmDialog, openDialog, sheetHeader } from '../ui.js';
+import { emptyState, grupoTag, botaoVideo, animacaoMini, toast, enquanto, confirmDialog, openDialog, sheetHeader } from '../ui.js';
 import { icon } from '../icons.js';
 import { textoResumo, ligarComecar, validadeBadge } from './comum.js';
 import { abrirFormExercicio } from './exercicios.js';
@@ -36,6 +36,7 @@ function renderLeitura(t) {
             <p class="item-meta">${ex ? grupoTag(ex.grupo) : ''}<span class="alvo">${alvo(item)}</span></p>
             ${item.obs ? `<p class="obs">${esc(item.obs)}</p>` : ''}
             ${antes ? `<p class="ultima">${icon('history', { size: 14 })}Última vez: ${esc(textoSeries(antes.series))}</p>` : ''}
+            ${animacaoMini(ex)}
           </div>
           ${botaoVideo(ex)}
         </li>`;

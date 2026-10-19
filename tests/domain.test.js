@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  embedVideo, lerInicio, fmtCronometro, fmtDescanso, restante, repsAlvo, resumoTreino, proximoTreino, ultimaVez,
+  embedVideo, fonteVideo, lerInicio, fmtCronometro, fmtDescanso, restante, repsAlvo, resumoTreino, proximoTreino, ultimaVez,
   textoSeries, novaSessao, proximaSerie, resumoSessao, marcarSerie, sessaoParaLinha, diasDesde, diasTreinados,
   evolucao, progressoCargas, copiarItens, fichasDoAluno, fmtKg, fmtDuracao,
 } from '../js/domain.js';
@@ -40,6 +40,20 @@ test('vídeo do Vimeo (público e não listado) e links que não tocam no app', 
   assert.equal(embedVideo('javascript:alert(1)'), null);
   assert.equal(embedVideo(''), null);
   assert.equal(embedVideo('não é link'), null);
+});
+
+test('GIF, imagem e MP4 direto (animação de boneco)', () => {
+  const g = embedVideo('https://exemplo.com/anim/supino.gif');
+  assert.equal(g.tipo, 'imagem');
+  assert.equal(g.src, 'https://exemplo.com/anim/supino.gif');
+  assert.equal(g.thumb, g.src, 'o próprio GIF serve de miniatura');
+  assert.equal(g.embed, null);
+  assert.equal(embedVideo('https://cdn.x.com/a/b.WEBP?v=2').tipo, 'imagem', 'extensão sem diferenciar maiúscula, com query');
+  const m = embedVideo('https://exemplo.com/remada.mp4');
+  assert.equal(m.tipo, 'arquivo');
+  assert.equal(m.thumb, null);
+  assert.equal(embedVideo('https://exemplo.com/pagina.html'), null);
+  assert.equal(fonteVideo(embedVideo('https://youtu.be/EZMYCLKuGow')), 'YouTube');
 });
 
 test('tempo inicial do YouTube', () => {

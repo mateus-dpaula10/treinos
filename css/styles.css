@@ -649,3 +649,13 @@ dialog.sheet.sheet-video { width: min(760px, 100vw); }
 }
 .descanso-mini.acabou { background: var(--pos); color: #fff; }
 @media (min-width: 960px) { .series-head, .series, .series-acoes, .alvo-linha, .exercicio-corpo > .obs, .exercicio-corpo > .ultima { max-width: 640px; } }
+/* Animação em loop (GIF/MP4 de "boneco"): fundo claro mesmo no tema escuro, porque esses arquivos costumam ser brancos. */
+.player.animacao { aspect-ratio: auto; background: #fff; display: grid; place-items: center; }
+.player.animacao img, .player.animacao video { position: static; width: 100%; height: auto; max-height: 60dvh; object-fit: contain; }
+.anim-mini {
+  display: block; width: 132px; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  background: #fff; cursor: zoom-in; justify-self: start;
+}
+.anim-mini img, .anim-mini video { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.exercicio-txt .anim-mini { margin-top: 4px; }
+@media (prefers-reduced-motion: reduce) { .anim-mini video { animation: none; } }

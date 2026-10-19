@@ -1,0 +1,58 @@
+-- Troca os vídeos da biblioteca pelas animações 3D ("boneco") no banco que já existe.
+-- Rode uma vez no SQL Editor. Só mexe no exercício cujo vídeo ainda é o original da biblioteca (ou vazio):
+-- link que o personal trocou pelo app fica como está. Rodar de novo não muda nada.
+update treinos.exercicios e
+   set video_url = v.novo
+  from (values
+    ('Supino reto com barra', 'https://www.youtube.com/shorts/9ULrFVFOSZg', 'https://www.youtube.com/watch?v=EZMYCLKuGow'),
+    ('Supino inclinado com halteres', 'https://www.youtube.com/shorts/MN7kxbhUa6c', 'https://www.youtube.com/watch?v=RGeSgQmO1EU'),
+    ('Crucifixo na máquina (peck deck)', 'https://www.youtube.com/shorts/5fKRGVVNRxw', 'https://www.youtube.com/watch?v=FzCnfD0gOXo'),
+    ('Flexão de braço', 'https://www.youtube.com/shorts/2kI3EXD6ugo', ''),
+    ('Crossover no cabo', 'https://www.youtube.com/shorts/7UDq8vFEPWU', ''),
+    ('Puxada frontal (pulldown)', 'https://www.youtube.com/shorts/FvG52wubYBM', 'https://www.youtube.com/watch?v=7cCiQUdIXWw'),
+    ('Puxada neutra', 'https://www.youtube.com/shorts/iqfzNQ__u4c', ''),
+    ('Remada baixa no cabo', 'https://www.youtube.com/shorts/qrUj8CK7Cb4', 'https://www.youtube.com/watch?v=f8AVh4VBbos'),
+    ('Remada curvada com barra', 'https://www.youtube.com/shorts/tCE8vclB9CM', 'https://www.youtube.com/watch?v=mxvS-iwm53o'),
+    ('Remada unilateral com halter (serrote)', 'https://www.youtube.com/shorts/1CcC3Y6UDuI', ''),
+    ('Barra fixa', 'https://www.youtube.com/shorts/NrUuWq-dwfo', ''),
+    ('Levantamento terra', 'https://www.youtube.com/shorts/wkx73ROCS_U', 'https://www.youtube.com/watch?v=50AkPBZwACQ'),
+    ('Desenvolvimento com halteres', 'https://www.youtube.com/shorts/K6FNO-Tuqgk', 'https://www.youtube.com/watch?v=eufDL9MmF8A'),
+    ('Desenvolvimento na máquina', 'https://www.youtube.com/shorts/kooOA6qmzlw', ''),
+    ('Elevação lateral', 'https://www.youtube.com/shorts/AybrBaAUYsA', 'https://www.youtube.com/watch?v=ulVCkRXXuWQ'),
+    ('Elevação lateral unilateral na polia', 'https://www.youtube.com/shorts/XFK-ZTIW3i4', ''),
+    ('Elevação frontal', 'https://www.youtube.com/shorts/EzkynTYTKLg', ''),
+    ('Crucifixo inverso na máquina', 'https://www.youtube.com/shorts/IAURSNyEY-I', ''),
+    ('Face pull', 'https://www.youtube.com/shorts/0G6lfrITlws', ''),
+    ('Encolhimento', 'https://www.youtube.com/shorts/ZZ7kWTVd08w', ''),
+    ('Rosca direta com barra', 'https://www.youtube.com/shorts/0W5TC8ABjQQ', 'https://www.youtube.com/watch?v=Q8TqfD8E7BU'),
+    ('Rosca alternada com halteres', 'https://www.youtube.com/watch?v=gPZX2vTQSYY', ''),
+    ('Rosca martelo', 'https://www.youtube.com/shorts/d1Hc--wwevY', 'https://www.youtube.com/watch?v=OnNmaG_tZM4'),
+    ('Rosca Scott', 'https://www.youtube.com/shorts/JJ2LkyGDITQ', ''),
+    ('Tríceps na polia com corda', 'https://www.youtube.com/watch?v=S1YAXbW6__w', 'https://www.youtube.com/watch?v=KhK5HWJfsrQ'),
+    ('Tríceps testa', 'https://www.youtube.com/shorts/phd3Dq_n3B0', 'https://www.youtube.com/watch?v=zznCYBVZOVA'),
+    ('Tríceps francês com halter', 'https://www.youtube.com/shorts/oIAGzQRyfp8', ''),
+    ('Tríceps francês unilateral', 'https://www.youtube.com/shorts/PcPKbdFXcGI', ''),
+    ('Mergulho no banco', 'https://www.youtube.com/shorts/KMG8QOjG0iY', ''),
+    ('Agachamento livre', 'https://www.youtube.com/shorts/Of3iQMrBPhk', 'https://www.youtube.com/watch?v=s7i94Okznns'),
+    ('Leg press 45°', 'https://www.youtube.com/shorts/hWo4cgDzEXg', 'https://www.youtube.com/watch?v=VZqwnwcqNe8'),
+    ('Cadeira extensora', 'https://www.youtube.com/shorts/3fbSEfu94PY', 'https://www.youtube.com/watch?v=el3oHblB5DM'),
+    ('Afundo com halteres', 'https://www.youtube.com/watch?v=lIfDYdQyZmQ', ''),
+    ('Agachamento búlgaro', 'https://www.youtube.com/shorts/8jwhDRYuEhg', ''),
+    ('Mesa flexora', 'https://www.youtube.com/shorts/0OMn0zlAnXQ', 'https://www.youtube.com/watch?v=2-ULaRrQa7c'),
+    ('Cadeira flexora', 'https://www.youtube.com/watch?v=PvkDCShhyL0', ''),
+    ('Stiff com barra', 'https://www.youtube.com/shorts/pd6STdn6KlQ', 'https://www.youtube.com/watch?v=b5f-gnHBRvY'),
+    ('Elevação pélvica (hip thrust)', 'https://www.youtube.com/shorts/cOk54jRj8g8', 'https://www.youtube.com/watch?v=wpN_gUfSXTg'),
+    ('Cadeira abdutora', 'https://www.youtube.com/shorts/7MpKyzQHP3k', ''),
+    ('Glúteo no cabo (coice)', 'https://www.youtube.com/shorts/1fbtEmrVock', ''),
+    ('Panturrilha em pé', 'https://www.youtube.com/shorts/zz2Z1_HCANc', 'https://www.youtube.com/watch?v=of5Z7yj-HqY'),
+    ('Panturrilha sentado', 'https://www.youtube.com/watch?v=CK07KhkXLHo', ''),
+    ('Prancha', 'https://www.youtube.com/shorts/MyEc1f4qfJw', 'https://www.youtube.com/watch?v=qNRqGqESAWU'),
+    ('Abdominal supra (crunch)', 'https://www.youtube.com/shorts/LzuMxOk0RI4', 'https://www.youtube.com/watch?v=fR_KzGyKW3w'),
+    ('Elevação de pernas', 'https://www.youtube.com/watch?v=5jt-7Hji4YE', ''),
+    ('Abdominal na polia', 'https://www.youtube.com/shorts/Vfp8i6xKuCw', ''),
+    ('Esteira', 'https://www.youtube.com/shorts/165zThhFxPw', ''),
+    ('Corda naval', 'https://www.youtube.com/shorts/95mVVshuK7o', ''),
+    ('Alongamento de posterior', 'https://www.youtube.com/watch?v=Ukg0u757Su0', '')
+  ) as v (nome, novo, antigo)
+ where e.nome = v.nome
+   and (e.video_url = '' or e.video_url = v.antigo);

@@ -3,7 +3,7 @@
 import { exercicio, sessoesDe, eu } from '../store.js';
 import { proximaSerie, resumoSessao, fmtCronometro, fmtDuracao, fmtDescanso, ultimaVez, textoSeries, ESFORCO, fmtKg } from '../domain.js';
 import { esc, parseDecimal, plural } from '../utils.js';
-import { emptyState, grupoTag, botaoVideo, openDialog, sheetHeader, enquanto, toast, confirmDialog } from '../ui.js';
+import { emptyState, grupoTag, botaoVideo, animacaoMini, openDialog, sheetHeader, enquanto, toast, confirmDialog } from '../ui.js';
 import { icon } from '../icons.js';
 import * as sessao from '../sessao.js';
 
@@ -44,6 +44,7 @@ function cartaoExercicio(r, i, atual, hist) {
           <span><strong>Meta:</strong> ${r.series.length} × ${esc(r.reps_alvo || '—')}${r.carga_alvo ? ` · ${esc(r.carga_alvo)}` : ''} · descanso ${fmtDescanso(r.descanso_s)}</span>
           ${botaoVideo(ex)}
         </p>
+        ${animacaoMini(ex)}
         ${r.obs ? `<p class="obs">${esc(r.obs)}</p>` : ''}
         ${antes ? `<p class="ultima">${icon('history', { size: 14 })}Última vez: ${esc(textoSeries(antes.series))}</p>` : ''}
         <div class="series-head" aria-hidden="true"><span>Série</span><span>Carga</span><span>Reps</span><span>Feita</span></div>

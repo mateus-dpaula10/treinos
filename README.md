@@ -14,7 +14,7 @@ Mesmo padrão da Caderneta e dos Criativos: front em HTML/CSS/JS puro (sem build
 - **Modelos**: fichas sem aluno (iniciante, ABC…) para copiar para cada aluno novo.
 - **Acompanhamento**: quem treinou, quem sumiu há 7+ dias, fichas vencendo, histórico de cada aluno com carga e reps
   de cada série, evolução de carga e **comentário** em cada treino feito (o aluno vê).
-- **Exercícios**: biblioteca com 50 exercícios iniciais (22 já com vídeo verificado) e o link do vídeo de demonstração.
+- **Exercícios**: biblioteca com 50 exercícios iniciais, 49 já com animação 3D ("boneco") de demonstração.
 
 **Aluno**
 - **Hoje**: o próximo treino do rodízio (A → B → C → A…), as fichas e a frequência.
@@ -22,7 +22,8 @@ Mesmo padrão da Caderneta e dos Criativos: front em HTML/CSS/JS puro (sem build
   "última vez" de cada exercício, + / − série.
 - **Descanso**: começa sozinho ao marcar a série, com o tempo da ficha; −15 / +15 / Pular; bipe e vibração no fim.
   Conta pelo relógio, então continua certo com a tela apagada. A tela fica ligada durante o treino (onde o navegador permite).
-- **Vídeo**: YouTube (inclusive Shorts e youtu.be) e Vimeo tocam dentro do app; outros links abrem em outra aba.
+- **Vídeo**: YouTube (inclusive Shorts e youtu.be) e Vimeo tocam dentro do app. Link direto de GIF/WebP/MP4 aparece
+  em loop, sem som, também na tela do treino. Outros links abrem em outra aba.
 - **Sem internet**: o treino em andamento fica no aparelho (sobrevive a recarregar e a fechar o app). Ao concluir sem
   sinal, ele entra numa fila e é enviado sozinho quando a conexão volta, sem duplicar.
 - **Histórico**: todos os treinos, comentários do personal e evolução de carga por exercício.
@@ -69,8 +70,9 @@ Alguns vídeos têm a incorporação desligada pelo dono: nesses o player mostra
 "Abrir no YouTube". Para conferir um link antes: `https://www.youtube.com/oembed?url=<link>&format=json` responde 200
 quando o vídeo pode ser incorporado.
 
-Os vídeos da biblioteca inicial são de canais públicos (Leandro Twin, FisioPrev, Laércio Refundini e outros) e foram
-verificados em 18/10/2026. Para mudar a biblioteca inicial, edite `js/biblioteca.js` e rode
+Os vídeos da biblioteca inicial são animações 3D ("boneco") de canais públicos do YouTube (FITGET APP, Gym Visual,
+AOVALO), verificados em 18/10/2026. No banco que já existia, a troca é feita por `supabase/atualizar-videos-boneco.sql`
+(só mexe no vídeo que ainda é o original; link trocado pelo personal fica como está). Para mudar a biblioteca inicial, edite `js/biblioteca.js` e rode
 `node scripts/biblioteca-sql.mjs` (atualiza o `schema.sql`).
 
 ## App instalável (PWA)

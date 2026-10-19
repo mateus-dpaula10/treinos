@@ -40,13 +40,20 @@ export function lerInicio(t) {
 }
 
 /**
- * Link do YouTube (watch, youtu.be, shorts, embed, live) ou do Vimeo → como tocar dentro do app.
- * { tipo, id, embed, thumb, vertical } ou null se o link não for de nenhum dos dois (aí o app só abre o link).
+ * Link do YouTube (watch, youtu.be, shorts, embed, live), do Vimeo ou de um arquivo direto (GIF, WebP,
+ * imagem, MP4, WebM) → como mostrar dentro do app.
+ * { tipo: 'youtube'|'vimeo'|'imagem'|'arquivo', id, embed, src, thumb, vertical } ou null (aí o app só abre o link).
  */
 export function embedVideo(url) {
   let u;
   try { u = new URL(String(url || '').trim()); } catch { return null; }
   if (!/^https?:$/.test(u.protocol)) return null;
+  // Arquivo direto: GIF/WebP/imagem (a animação de "boneco" dos apps de academia) ou MP4/WebM curto.
+  const ext = /\.(gif|webp|png|jpe?g|mp4|webm)$/i.exec(u.pathname)?.[1].toLowerCase();
+  if (ext) {
+    const video = ext === 'mp4' || ext === 'webm';
+    return { tipo: video ? 'arquivo' : 'imagem', id: u.href, vertical: false, embed: null, src: u.href, thumb: video ? null : u.href };
+  }
   const host = u.hostname.replace(/^(www|m|music)\./, '');
   const partes = u.pathname.split('/').filter(Boolean);
   if (host === 'youtube.com' || host === 'youtube-nocookie.com' || host === 'youtu.be') {
@@ -76,6 +83,9 @@ export function embedVideo(url) {
   }
   return null;
 }
+
+/** Nome da fonte do vídeo para "Abrir no …". */
+export const fonteVideo = (v) => ({ youtube: 'YouTube', vimeo: 'Vimeo' }[v?.tipo] || 'navegador');
 
 // ---------- Tempo ----------
 

@@ -56,7 +56,7 @@ export function abrirFormExercicio(e, { aoSalvar } = {}) {
           ${Object.entries(GRUPOS).map(([k, v]) => `<option value="${k}" ${(e?.grupo || 'peito') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
         <label class="field" for="ef-equip"><span class="field-label">Aparelho <small>(opcional)</small></span><input id="ef-equip" name="equipamento" maxlength="60" value="${esc(e?.equipamento || '')}" placeholder="Máquina, halteres, polia…"></label>
       </div>
-      <label class="field" for="ef-video"><span class="field-label">Vídeo de demonstração <small>(link do YouTube ou Vimeo)</small></span>
+      <label class="field" for="ef-video"><span class="field-label">Vídeo de demonstração <small>(YouTube, Vimeo ou link de GIF/MP4)</small></span>
         <input id="ef-video" name="video" type="url" inputmode="url" maxlength="500" value="${esc(e?.video_url || '')}" placeholder="https://www.youtube.com/watch?v=…" spellcheck="false">
         <span class="field-hint" id="ef-video-dica" aria-live="polite"></span></label>
       <label class="field" for="ef-instr"><span class="field-label">Como fazer <small>(aparece para o aluno junto do vídeo)</small></span>
@@ -72,8 +72,9 @@ export function abrirFormExercicio(e, { aoSalvar } = {}) {
   const conferir = () => {
     const url = f.video.value.trim();
     const v = embedVideo(url);
-    dica.textContent = !url ? 'Shorts, links youtu.be e vídeos não listados também servem.'
-      : v ? `${v.tipo === 'youtube' ? 'YouTube' : 'Vimeo'} reconhecido: o vídeo toca dentro do app.`
+    dica.textContent = !url ? 'Shorts, youtu.be, vídeos não listados e links diretos de .gif/.webp/.mp4 também servem.'
+      : v?.embed ? `${v.tipo === 'youtube' ? 'YouTube' : 'Vimeo'} reconhecido: o vídeo toca dentro do app.`
+        : v ? `${v.tipo === 'imagem' ? 'Imagem/GIF' : 'Vídeo'} direto: aparece em loop, sem som, inclusive na tela do treino.`
         : /^https:\/\//i.test(url) ? 'Link de outro site: o aluno vai abrir em outra aba.' : 'O link precisa começar com https://';
   };
   conferir();

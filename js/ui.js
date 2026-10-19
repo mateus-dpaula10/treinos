@@ -1,7 +1,7 @@
 // Peças de interface compartilhadas: avisos (toasts), diálogos, vídeo do exercício e pedaços de HTML repetidos.
 import { esc, iniciais } from './utils.js';
 import { icon } from './icons.js';
-import { GRUPOS, embedVideo } from './domain.js';
+import { GRUPOS, embedVideo, fonteVideo } from './domain.js';
 
 // Rascunho: valores digitados e ainda não salvos na tela atual (id do campo → valor). Sobrevivem aos
 // redesenhos (o personal mudou a ficha, uma série foi marcada) e são descartados ao trocar de tela.
@@ -116,13 +116,28 @@ export function botaoVideo(ex, { classe = 'btn ghost small' } = {}) {
     ${icon(tem ? 'play' : 'info', { size: soIcone ? 18 : 16 })}${soIcone ? '' : `<span>${tem ? 'Vídeo' : 'Como fazer'}</span>`}</button>`;
 }
 
-/** Diálogo com o vídeo de demonstração (YouTube/Vimeo tocam aqui dentro) e as instruções. */
+/** Animação em loop (GIF/WebP/imagem ou MP4/WebM direto), sem som, como nos apps de academia. */
+function animacao(v, titulo, classe = '') {
+  if (v.tipo === 'imagem') return `<img class="${classe}" src="${esc(v.src)}" alt="Demonstração: ${esc(titulo)}" loading="lazy" decoding="async">`;
+  return `<video class="${classe}" src="${esc(v.src)}" autoplay loop muted playsinline preload="metadata" aria-label="Demonstração: ${esc(titulo)}"></video>`;
+}
+
+/** Miniatura animada para a tela do treino (só para GIF/MP4; YouTube/Vimeo ficam no botão "Vídeo"). */
+export function animacaoMini(ex) {
+  const v = ex && embedVideo(ex.video_url);
+  if (!v || (v.tipo !== 'imagem' && v.tipo !== 'arquivo')) return '';
+  return `<button type="button" class="anim-mini" data-video="${esc(ex.id)}" aria-label="Ampliar demonstração: ${esc(ex.nome)}">${animacao(v, ex.nome)}</button>`;
+}
+
+/** Diálogo com o vídeo de demonstração (YouTube/Vimeo/GIF/MP4 tocam aqui dentro) e as instruções. */
 export function abrirVideo(ex) {
   const v = embedVideo(ex.video_url);
-  const player = v
+  const player = v && v.embed
     ? `<div class="player ${v.vertical ? 'vertical' : ''}"><iframe src="${esc(v.embed)}" title="Vídeo: ${esc(ex.nome)}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
         allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe></div>`
+    : v
+      ? `<div class="player animacao">${animacao(v, ex.nome)}</div>`
     : ex.video_url
       ? `<p class="callout info">Esse link não toca aqui dentro. <a href="${esc(ex.video_url)}" target="_blank" rel="noopener noreferrer">Abrir o vídeo ${icon('external', { size: 14 })}</a></p>`
       : '<p class="callout info">Este exercício ainda não tem vídeo. O personal pode colocar um link do YouTube ou do Vimeo em Exercícios.</p>';
@@ -133,10 +148,10 @@ export function abrirVideo(ex) {
       <p class="item-meta">${grupoTag(ex.grupo)}${ex.equipamento ? `<span class="muted small">${esc(ex.equipamento)}</span>` : ''}</p>
       ${player}
       ${ex.instrucoes ? `<h3 class="sub-title">Como fazer</h3><p class="instrucoes">${esc(ex.instrucoes)}</p>` : ''}
-      ${v ? `<p class="small"><a href="${esc(ex.video_url)}" target="_blank" rel="noopener noreferrer">Abrir no ${v.tipo === 'youtube' ? 'YouTube' : 'Vimeo'} ${icon('external', { size: 14 })}</a></p>` : ''}
+      ${v?.embed ? `<p class="small"><a href="${esc(ex.video_url)}" target="_blank" rel="noopener noreferrer">Abrir no ${fonteVideo(v)} ${icon('external', { size: 14 })}</a></p>` : ''}
     </div>`, {
     classe: 'sheet-video',
     // Fechar para o vídeo (senão o som continua tocando com o diálogo fechado).
-    onClose: () => dlg.querySelector('iframe')?.remove(),
+    onClose: () => dlg.querySelector('.player')?.remove(),
   });
 }
