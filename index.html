@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Treinos</title>
   <meta name="description" content="Treino de academia: o personal monta a ficha, o aluno marca as séries, cronometra o descanso e vê o vídeo de cada exercício.">
   <meta name="robots" content="noindex">
@@ -24,6 +24,10 @@
       var t = localStorage.getItem('treinos:theme');
       if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
+    // Sem zoom no iPhone: o Safari ignora o user-scalable=no da meta viewport, então a pinça é barrada aqui.
+    ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) {
+      document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false });
+    });
   </script>
 </head>
 <body>

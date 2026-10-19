@@ -97,6 +97,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+/* Sem zoom (pinça ou duplo toque): o app se comporta como aplicativo. Rolar continua normal. */
+html, body { touch-action: pan-x pan-y; }
 body {
   margin: 0;
   background: var(--bg);
@@ -510,7 +512,6 @@ a.kpi:hover { border-color: var(--primary); }
 .item-ficha .field { margin-bottom: 10px; gap: 4px; }
 .item-ficha .field-label { font-size: .8rem; color: var(--muted); }
 .item-ficha .field input, .item-ficha .field select { min-height: 42px; padding: 8px 10px; }
-.obs-campo input { font-size: .92rem; }
 .barra-salvar {
   position: sticky; bottom: calc(var(--nav-h) + 10px + env(safe-area-inset-bottom)); z-index: 15;
   display: flex; align-items: center; gap: 8px; padding: 10px 10px 10px 16px; border-radius: var(--radius);
